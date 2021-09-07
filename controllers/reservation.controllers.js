@@ -5,7 +5,12 @@ import Reservation from '../models/Reservation.model';
 const getReservation = async (req, res, next) => {
     try {
         const reserervations = await Reservation.find();
-        return res.status(200).json(reserervations);
+        if(reserervations.length === 0){
+            const error = new Error("No hay reservas");
+            error.status = 404;
+            throw error;
+         }
+         return res.status(200).json(reserervations);
         
     } catch (error) {
         return next(error);
@@ -15,17 +20,15 @@ const getReservation = async (req, res, next) => {
 
 const getReservationId = async (req, res, next) => {
     const { id } = req.params;
-console.log('id línea 18');
     try {
         const reservation = await Reservation.findById(id);
 
-        if(reservation){
-            return res.status(200).json(reservation);
-        }else{
-            const error = new Error('No se encuentra la reserva con la id indicada');
+        if(reservation === null || reservation === undefined){
+            const error = new Error("Reservation no encontrado");
             error.status = 404;
             throw error;
         }
+        return res.status(200).json(reservation);
         
     } catch (error) {
         return next(error);

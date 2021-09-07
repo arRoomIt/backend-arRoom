@@ -3,6 +3,12 @@ import Review from '../models/Review.model';
  const reviewGet = async(req, res, next)=>{
     try {
         const reviews = await Review.find();
+        if(reviews.length===0){
+            const error = new Error("La coleccion esta vacia");
+            error.status = 404;
+            throw error;
+
+        }
         return res.status(200).json(reviews);
 
     } catch (error) {
@@ -63,6 +69,12 @@ const reviewPut = async(req, res, next)=>{
     const {id} = req.params;
     try {
         const review = await Review.findById(id);
+        if(review === null || review === undefined){
+            const error = new Error("Review no encontrado");
+            error.status = 404;
+            throw error;
+        }
+        
         return res.status(200).json(review);
     } catch (error) {
        const myError = new Error("No se ha encontrado el comentario con esa id");

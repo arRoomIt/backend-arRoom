@@ -1,14 +1,12 @@
-//imports paquetes
-// const express = require('express');
 import express from 'express';
 
-
-// const dotenv = require('dotenv');
 import dotenv from 'dotenv';
 dotenv.config();
 
-//importando archivos
-// const db = require('./utils/db');
+//routes
+import {router as routerWorkspace} from './routes/Workspace.routes';
+
+
 import connect from './utils/db';
 connect();
 
@@ -16,18 +14,12 @@ connect();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-const router = express.Router();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use('/',router);
 
-
-router.get('/',(req,res) => {
-
-    res.status(200).json("backend funcionando!!!!");
-});
+app.use('/workspace',routerWorkspace);
 
 
 //para controlar paginas que no existe

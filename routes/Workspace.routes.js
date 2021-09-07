@@ -8,7 +8,7 @@ router.get('/',workspaceGet);
 
 router.post('/create',workspacePost);
 
-router.put('/create',workspacePut);
+router.put('/edit',workspacePut);
 
 router.delete('/delete',workspaceDelete);
 

@@ -66,6 +66,7 @@ const workspacePut = async (req, res) => {
     try {
 
         const {
+            id,
             title,
             roomType,
             totalOccupancy,
@@ -83,21 +84,20 @@ const workspacePut = async (req, res) => {
 
         const update = {};
 
-        if(title) update = title;
-        if(roomType) update = roomType;
-        if(totalOccupancy) update = totalOccupancy;
-        if(summary) update = summary;
-        if(hasAirCon) update = hasAirCon;
-        if(hasAirHeating) update = hasAirHeating;
-        if(hasInternet) update = hasInternet;
-        if(price) update = price;
-        if(publishedAt) update = publishedAt;
-        if(isBooked) update = isBooked;
-        if(reviews) update = reviews;
-        if(reservations) update = reservations;
+        if(title) update.title = title;
+        if(roomType) update.roomType = roomType;
+        if(totalOccupancy) update.totalOccupancy = totalOccupancy;
+        if(summary) update.summary = summary;
+        if(hasAirCon) update.hasAirCon = hasAirCon;
+        if(hasAirHeating) update.hasAirHeating = hasAirHeating;
+        if(hasInternet) update.hasInternet = hasInternet;
+        if(price) update.price = price;
+        if(publishedAt) update.publishedAt = publishedAt;
+        if(isBooked) update.isBooked = isBooked;
+        if(reviews) update.reviews = reviews;
+        if(reservations) update.reservations = reservations;
 
-        const updateWorkspace = await Workspace.findByIdAndUpdate(
-            
+        const updateWorkspace = await Workspace.findByIdAndUpdate( 
             id,
             update,
             { new: true },
@@ -105,6 +105,7 @@ const workspacePut = async (req, res) => {
         return res.status(200).json(updateWorkspace);
 
     } catch (error) {
+        console.error(error);
         return next(error);
     }
 }

@@ -10,7 +10,7 @@ router.post('/create',workspacePost);
 
 router.put('/edit',workspacePut);
 
-router.delete('/delete',workspaceDelete);
+router.delete('/delete/:id',workspaceDelete);
 
 router.get('/:id',workspaceGetById);
 

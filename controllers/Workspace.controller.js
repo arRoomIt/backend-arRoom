@@ -6,7 +6,9 @@ const workspaceGet = async(req, res, next) =>{
         const workspace = await Workspace.find();
         
         if(workspace.length === 0){
-            return res.status(404).json("Coleccion vacia");
+           const error = new Error("Coleccion vacía");
+           error.status = 404;
+           throw error;
         }
         return res.status(200).json(workspace);
 
@@ -124,22 +126,24 @@ const workspaceDelete = async (req, res) => {
         }
         
     } catch (error) {
+        console.error(error);
         return next(error);
     }
 }
 
-const workspaceGetById = async (req, res) => {
+const workspaceGetById = async (req, res, next) => {
 
     try {
 
         const { id } = req.params;
         const workspace = await Workspace.findById(id);
 
-        if(workspace.length === 0){
+        if(workspace === null || workspace === undefined){
             const error = new Error("Workspace no encontrado");
             error.status = 404;
             throw error;
         }
+        
         return res.status(200).json(workspace);
     } catch (error) {
         return next(error);

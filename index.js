@@ -1,13 +1,16 @@
 //imports paquetes
-const express = require('express');
+// const express = require('express');
+import express from 'express';
 
 
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
 
 //importando archivos
-const db = require('./utils/db');
-db.connect();
+// const db = require('./utils/db');
+import connect from './utils/db';
+connect();
 
 
 const PORT = process.env.PORT || 3000;

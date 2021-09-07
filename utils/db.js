@@ -19,7 +19,7 @@ const connect = async () => {
     }
 }
 
-module.exports = {
-    connect,
+export {
+    connect as default,
     DB_URL,
 };

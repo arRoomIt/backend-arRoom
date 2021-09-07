@@ -13,6 +13,7 @@ const workspaceSchema = new Schema(
         hasInternet: {type: Boolean, required: true},
         price: {type: Number, required: true},
         publishedAt: {type: Date},
+        isBooked:{type: Boolean},
         images: [{type:String}],
         reviews: [{type: mongoose.Types.ObjectId, ref: 'Review'}],
         reservations: [{type: mongoose.Types.ObjectId, ref:'Reservation'}]

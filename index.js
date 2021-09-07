@@ -1,6 +1,7 @@
 //imports paquetes
 // const express = require('express');
 import express from 'express';
+import routerReservation from './routes/reservation.routes'
 
 
 // const dotenv = require('dotenv');
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/',router);
+app.use('/reservation', routerReservation);
+
 
 
 router.get('/',(req,res) => {

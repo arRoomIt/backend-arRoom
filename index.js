@@ -9,6 +9,7 @@ dotenv.config();
 
 //importando archivos
 // const db = require('./utils/db');
+import routerReview from './routes/Review.routes'; 
 import connect from './utils/db';
 connect();
 
@@ -16,19 +17,13 @@ connect();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-const router = express.Router();
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use('/',router);
 
-
-router.get('/',(req,res) => {
-
-    res.status(200).json("backend funcionando!!!!");
-});
-
+app.use("/review", routerReview);
 
 //para controlar paginas que no existe
 app.use('*',(req,res,next) => {

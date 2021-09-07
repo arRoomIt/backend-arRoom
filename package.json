@@ -1,0 +1,32 @@
+{
+  "name": "arroom_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arRoomIt/backend-arRoom.git"
+  },
+  "author": "Javi, Trigo, Mohibul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arRoomIt/backend-arRoom/issues"
+  },
+  "homepage": "https://github.com/arRoomIt/backend-arRoom#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.4"
+  }
+}

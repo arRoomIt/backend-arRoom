@@ -152,10 +152,50 @@ const workspaceGetById = async (req, res, next) => {
     }
 }
 
+const workspaceFilter = async (req, res, next) => {
+
+    try {
+        const isBooked = false;
+        const {
+            roomType,
+            totalOccupancy,
+            hasAirCon,
+            hasAirHeating,
+            hasInternet,
+            price,
+        } = req.body;
+
+        //comprobamos los campos y en caso de tenerlos se filtra workspace con dichos filtros
+        const query = {
+         ...(roomType && {roomType: {$regex : roomType}}),
+         ...(totalOccupancy && {totalOccupancy: {$gte: totalOccupancy}}),
+         ...(hasAirCon && {hasAirCon: hasAirCon}),
+         ...(hasAirHeating && {hasAirHeating: hasAirHeating }),
+         ...(hasInternet && {hasInternet: hasInternet}),
+         ...(price && {$lte: price}),
+         ...(isBooked && {isBooked}),
+        }
+
+        console.log("probando filter--->",query);
+        const workspace = await Workspace.find(query);
+
+        if(workspace !== null && workspace !== undefined && workspace.length !== 0){
+            return res.status(200).json(workspace);
+        }else{
+            return res.status(404).json("No hay workspace que cumplen esos campos");
+        }
+        
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+}
+
 export {
     workspaceGet,
     workspacePost,
     workspacePut,
     workspaceDelete,
-    workspaceGetById
+    workspaceGetById,
+    workspaceFilter
 }

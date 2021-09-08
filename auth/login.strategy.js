@@ -1,4 +1,4 @@
-import User from '../models/User.models';
+import User from '../models/User.model';
 
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');

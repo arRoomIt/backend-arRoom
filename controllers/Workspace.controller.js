@@ -10,6 +10,7 @@ const workspaceGet = async(req, res, next) =>{
            error.status = 404;
            throw error;
         }
+        
         return res.status(200).json(workspace);
 
     }catch(err){

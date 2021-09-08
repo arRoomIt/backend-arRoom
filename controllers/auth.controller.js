@@ -29,8 +29,10 @@ const loginPost = (req, res, next) => {
       req.logout();
       req.session.destroy(()=>{
         res.clearCookie('connect.sid');
-        return res.redirect('/');
+        return res.status(200).json("Session cerrado correctamente");
       }); 
+    }else{
+      return res.status(404).json("No hay session de user");
     }
   }
   

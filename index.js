@@ -1,7 +1,16 @@
 import express from 'express';
+import passport from 'passport';
+// import express-session as session from 'express-session';
+// import connect-mongo as MongoStore from 'connect-mongo';
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 import dotenv from 'dotenv';
 dotenv.config();
+
+import setStrategies from './auth';
+
+setStrategies();
  
 //routes
 import {router as routerWorkspace} from './routes/Workspace.routes';
@@ -9,12 +18,27 @@ import routerReservation from './routes/reservation.routes';
 import routerReview from './routes/Review.routes'; 
 
 import connect from './config/db';
+import db from './config/db';
 connect();
 
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+app.use(session({
+    secret:process.env.SESSION_SECRET || "!@#$%^GVHCJGhbhdc23456",
+    resave:false,
+    saveUninitialized:false,
+    cookie:{
+        maxAge:24 * 60 * 60 * 1000
+    },
+    store: MongoStore.create({mongoUrl:db.DB_URL})
+}));
+
+app.use(passport.initialize());
+
+app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

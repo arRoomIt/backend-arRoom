@@ -1,8 +1,11 @@
 import multer from 'multer';
-import path from 'path';
+//import path from 'path';
+import fs from 'fs';
+
+const path = require('path');
 
 const cloudinary = require('cloudinary').v2;
-// import couldinary from 'cloudinary';
+// import cloudinary from 'cloudinary';
 
 const FILE_EXTENSION = ['image/png', 'image/jpg', 'image/jpeg'];
 
@@ -32,16 +35,23 @@ const upload = multer({
 });
 
 const uptoCloudinary = async (req, res, next) => {
-    if(req.file){
-        console.log(req.file);
-        const img = await cloudinary.uploader.upload(req.file.path);
-        await fs.unlinkSinc(req.file.path);
-        req.file_url = img.secure_url;
-        return next();
-    }else{
-        return next();
+    
+    try {
+        
+        if(req.file){
+            const img = await cloudinary.uploader.upload(req.file.path);
+            console.log(img);
+            await fs.unlinkSinc(req.file.path);
+            req.file_url = img.secure_url;
+            return next();
+        }else{
+            return next();
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 
+//module.exports =  {upload, uptoCloudinary};
 
 export default {upload: upload, uptoCloudinary};

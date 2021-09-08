@@ -20,6 +20,7 @@ const workspaceGet = async(req, res, next) =>{
 
 const workspacePost = async(req, res, next) =>{
 
+    console.log('hola workspace');
     const getPhoto = req.file ? req.file.filename : null;
 
     try {
@@ -52,10 +53,9 @@ const workspacePost = async(req, res, next) =>{
                 price,
                 publishedAt,
                 isBooked: isBooked === "true"? true: false,
-                images: req.fileUrl ? req.fileUrl : 'https://utopicus.es/sites/default/files/styles/gallery/public/paragraph/block_gallery_item/image/2021-01/Utopicus%20Francisco%20Silvela_zona%20fix%20%282%29.jpg?h=8f9cfe54&itok=7RYy6dL6',
                 reviews,
-                reservations,
-                photo: req.file.originalname,
+                images: req.file_url,
+                reservations
             }
         );
 
@@ -63,6 +63,7 @@ const workspacePost = async(req, res, next) =>{
         return res.status(200).json(createdWorkspace);
 
     } catch (error) {
+        console.log(error);
         return next(error);
     }
 }

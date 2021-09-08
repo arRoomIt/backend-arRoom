@@ -1,6 +1,8 @@
 import express from 'express';
 import {workspaceGet, workspacePost, workspacePut,workspaceDelete,workspaceGetById} from '../controllers/workspace.controller';
-import upload from '../middlewares/file.middleware';
+// import upload from '../middlewares/file.middleware';
+
+const { upload, uptoCloudinary } = require('../middlewares/file.middleware');
 
 
 
@@ -8,7 +10,7 @@ const router = express.Router();
 
 router.get('/',workspaceGet);
 
-router.post('/create', [upload.upload.single('photo'), upload.uptoCloudinary], workspacePost);
+router.post('/create', [upload.upload.single('images'), upload.uptoCloudinary], workspacePost);
 
 router.put('/edit',workspacePut);
 

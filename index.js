@@ -17,6 +17,7 @@ import {router as routerWorkspace} from './routes/Workspace.routes';
 import {router as routerAuth} from './routes/Auth.routes';
 import routerReservation from './routes/reservation.routes';
 import routerReview from './routes/Review.routes'; 
+import routerUser from './routes/User.routes';
 
 import connect,{DB_URL} from './config/db';
 
@@ -48,6 +49,7 @@ app.use('/workspace',routerWorkspace);
 app.use('/reservation', routerReservation);
 app.use("/review", routerReview);
 app.use('/auth',routerAuth);
+app.use('/user',routerUser);
 
 //para controlar paginas que no existe
 app.use('*',(req,res,next) => {

@@ -4,14 +4,16 @@ import {registerPost,
     logoutPost,
     checkSession} from '../controllers/auth.controller';
 
+    import{isUser}from '../middlewares/auth.middleware';
+
 
 const router = express.Router();
 
 router.post('/register', registerPost);
 
-router.post('/login', loginPost);
+router.post('/login',[isUser], loginPost);
 
-router.post('/logout', logoutPost);
+router.post('/logout',[isUser], logoutPost);
 
 router.get('/checkSession',checkSession);
 

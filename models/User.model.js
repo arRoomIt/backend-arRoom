@@ -8,7 +8,7 @@ const userSchema = new Schema (
         password:{type: String , required: true},
         name:{type: String , required: true},
         phoneNumber:{type: String , required: true},
-        role:{type: String , required: true, default: "user", enum: ['user', 'admin'] },
+        role:{type: String , required: true, default: "user", enum: ['user','host','admin'] },
         isHost:{type: Boolean , required:true},
         profileImage:{type: String },
         reviews:[{type: mongoose.Types.ObjectId, ref:"Review"}],

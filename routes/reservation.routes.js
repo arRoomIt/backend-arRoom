@@ -3,8 +3,6 @@ import { getReservation, getReservationId, createReservation, editReservation,de
 
 const routerReservation = express.Router();
 
-
-
 routerReservation.get('/', getReservation);
 
 routerReservation.post('/create', createReservation);

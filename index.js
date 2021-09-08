@@ -5,7 +5,7 @@ dotenv.config();
  
 //routes
 import {router as routerWorkspace} from './routes/Workspace.routes';
-import routerReservation from './routes/reservation.routes';
+import routerReservation from './routes/Reservation.routes';
 import routerReview from './routes/Review.routes'; 
 
 import connect from './config/db';

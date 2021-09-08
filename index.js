@@ -5,6 +5,7 @@ dotenv.config();
  
 //routes
 import {router as routerWorkspace} from './routes/Workspace.routes';
+import {router as routerAuth} from './routes/Auth.routes';
 import routerReservation from './routes/reservation.routes';
 import routerReview from './routes/Review.routes'; 
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/workspace',routerWorkspace);
 app.use('/reservation', routerReservation);
 app.use("/review", routerReview);
+app.use('/auth',routerAuth);
 
 //para controlar paginas que no existe
 app.use('*',(req,res,next) => {

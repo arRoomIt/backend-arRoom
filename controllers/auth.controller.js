@@ -48,7 +48,7 @@ const loginPost = (req, res, next) => {
   
   }
   
-  module.exports = {
+export {
     registerPost,
     loginPost,
     logoutPost,

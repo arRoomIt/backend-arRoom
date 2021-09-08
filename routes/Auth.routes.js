@@ -1,13 +1,18 @@
 import express from 'express';
+import {registerPost,
+    loginPost,
+    logoutPost,
+    checkSession} from '../controllers/auth.controller';
+
 
 const router = express.Router();
 
-router.post('/register', controller.registerPost);
+router.post('/register', registerPost);
 
-router.post('/login', controller.loginPost);
+router.post('/login', loginPost);
 
-router.post('/logout', controller.logoutPost);
+router.post('/logout', logoutPost);
 
-router.get('/checkSession',controller.checkSession);
+router.get('/checkSession',checkSession);
 
-export default router;
+export {router};

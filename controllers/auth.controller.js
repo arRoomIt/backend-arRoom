@@ -2,13 +2,13 @@ import passport from 'passport';
 
 const registerPost = (req, res, next) => {
 
-    const done = (err,res,next) => {
+    const done = (err,user) => {
         if(err) return next(err);
 
         req.login(user, (error) => (error ? next(error) : res.json(user)));
     }
 
-    passport.authenticate("login", done)(req);
+    passport.authenticate("register", done)(req);
 
 }
 
@@ -19,7 +19,7 @@ const loginPost = (req, res, next) => {
       req.login(user, (error) => (error ? next(error) : res.json(user)));
     };
   
-    passport.authenticate("register", done)(req);
+    passport.authenticate("login", done)(req);
   };
   
   const logoutPost = (req, res, next) => {

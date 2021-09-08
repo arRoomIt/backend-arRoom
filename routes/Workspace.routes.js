@@ -1,5 +1,5 @@
 import express from 'express';
-import {workspaceGet, workspacePost, workspacePut,workspaceDelete,workspaceGetById} from '../controllers/Workspace.controller';
+import {workspaceGet, workspacePost, workspacePut,workspaceDelete,workspaceGetById} from '../controllers/workspace.controller';
 
 
 const router = express.Router();

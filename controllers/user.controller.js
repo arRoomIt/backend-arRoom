@@ -1,5 +1,6 @@
 import User from '../models/User.model';
 
+
 const getUser = async (req, res, next) => {
     try {
         const exitUser = await User.find();

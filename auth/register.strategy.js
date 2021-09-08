@@ -2,17 +2,9 @@ const LocalStrategy = require('passport-local').Strategy;
 
 import bcrypt from 'bcrypt';
 
+import {validateEmail,validatePass} from "../utils/utilsAuth";
+
 import User from "../models/User.model";
-
-const validateEmail = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-};
-
-const validatePass = (password) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-    return re.test(String(password));
-}
 
 const registerStrategy = new LocalStrategy(
     {
@@ -42,13 +34,31 @@ const registerStrategy = new LocalStrategy(
             }
             const isValidPassword = validatePass(password);
             if(!isValidPassword){
-                
+                const error = new Error ("Contraseña incorrecta. Tiene que contener minimo 8 caracteres,una minuscula,una mayuscula y un numero");
+                return done(error);
             }
 
+            const saltRounds = 10;
+            const hash = await bcrypt.hash(password,saltRounds);
+
+            const newUser = new User({
+                email,
+                password: hash,
+                name:req.body.name,
+                phoneNumber:req.body.phoneNumber,
+                isHost:req.body.isHost,
+                profileImage:req.body.profileImage,
+            });
+
+            const savedUser = await newUser.save();
+            savedUser.password = undefined;
+
+            return done(null,savedUser);
+
         } catch (error) {
-            
+            return done(error);
         }
 
-    }
+    });
 
-)
+    export default registerStrategy;

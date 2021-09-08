@@ -1,16 +1,13 @@
-//imports paquetes
-// const express = require('express');
 import express from 'express';
-import routerReservation from './routes/reservation.routes'
 
-
-// const dotenv = require('dotenv');
 import dotenv from 'dotenv';
 dotenv.config();
-
-//importando archivos
-// const db = require('./utils/db');
+ 
+//routes
+import {router as routerWorkspace} from './routes/Workspace.routes';
+import routerReservation from './routes/reservation.routes';
 import routerReview from './routes/Review.routes'; 
+
 import connect from './utils/db';
 connect();
 
@@ -19,11 +16,10 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-
+app.use('/workspace',routerWorkspace);
 app.use('/reservation', routerReservation);
 app.use("/review", routerReview);
 

@@ -47,7 +47,6 @@ const uptoCloudinary = async (req, res, next) => {
         
         if(req.file){
             const img = await cloudinary.uploader.upload(req.file.path);
-            console.log(img);
             await fs.unlinkSync(req.file.path);
             req.file_url = img.secure_url;
             return next();

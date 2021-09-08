@@ -4,13 +4,13 @@ import Reservation from '../models/Reservation.model';
 
 const getReservation = async (req, res, next) => {
     try {
-        const reserervations = await Reservation.find();
-        if(reserervations.length === 0){
+        const reservation = await Reservation.find();
+        if(reservation.length === 0){
             const error = new Error("No hay reservas");
             error.status = 404;
             throw error;
          }
-         return res.status(200).json(reserervations);
+         return res.status(200).json(reservation);
         
     } catch (error) {
         return next(error);

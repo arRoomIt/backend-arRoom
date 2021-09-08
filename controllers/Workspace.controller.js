@@ -20,9 +20,6 @@ const workspaceGet = async(req, res, next) =>{
 
 const workspacePost = async(req, res, next) =>{
 
-    console.log('hola workspace');
-    const getPhoto = req.file ? req.file.filename : null;
-
     try {
         
         const {
@@ -54,7 +51,7 @@ const workspacePost = async(req, res, next) =>{
                 publishedAt,
                 isBooked: isBooked === "true"? true: false,
                 reviews,
-                images: req.file_url,
+                images: req.file_url ? req.file_url: '',
                 reservations
             }
         );

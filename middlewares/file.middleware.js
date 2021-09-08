@@ -37,11 +37,18 @@ const upload = multer({
 const uptoCloudinary = async (req, res, next) => {
     
     try {
+
+        cloudinary.config({ 
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET,
+            secure: true
+        });
         
         if(req.file){
             const img = await cloudinary.uploader.upload(req.file.path);
             console.log(img);
-            await fs.unlinkSinc(req.file.path);
+            await fs.unlinkSync(req.file.path);
             req.file_url = img.secure_url;
             return next();
         }else{
@@ -52,6 +59,6 @@ const uptoCloudinary = async (req, res, next) => {
     }
 }
 
-//module.exports =  {upload, uptoCloudinary};
+module.exports =  {upload, uptoCloudinary};
 
-export default {upload: upload, uptoCloudinary};
+//export default {upload: upload, uptoCloudinary};

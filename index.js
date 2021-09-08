@@ -1,5 +1,4 @@
 import express from 'express';
-import routerReservation from './routes/reservation.routes'
 
 import dotenv from 'dotenv';
 dotenv.config();

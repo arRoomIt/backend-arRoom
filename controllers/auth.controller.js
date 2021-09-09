@@ -4,7 +4,6 @@ const registerPost = (req, res, next) => {
 
     const done = (err,user) => {
         if(err) return next(err);
-
         req.login(user, (error) => (error ? next(error) : res.json(user)));
     }
 

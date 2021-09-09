@@ -49,6 +49,10 @@ const registerStrategy = new LocalStrategy(
                 isHost:req.body.isHost,
                 profileImage:req.body.profileImage,
             });
+            if(newUser.isHost === true){
+                newUser.role = 'host';
+            }
+
 
             const savedUser = await newUser.save();
             savedUser.password = undefined;

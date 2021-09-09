@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-
+//TODO: cambiar el nombre del campo "reviews" a ""
+//TODO: campo para almacenar id de review de host --> "hostsReview: [{}]"
+//TODO: campo para almacenar id de workspace donde ha estado previamente --> "visited: [{ObjectId, ref: wok}]"
 const userSchema = new Schema ( 
     { 
         email:{type: String , required: true},

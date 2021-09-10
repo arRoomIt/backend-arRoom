@@ -176,7 +176,8 @@ const workspaceFilter = async (req, res, next) => {
          ...(isBooked && {isBooked}),
         }
 
-        console.log("probando filter--->",query);
+        // console.log("probando filter--->",query);
+        
         const workspace = await Workspace.find(query);
 
         if(workspace !== null && workspace !== undefined && workspace.length !== 0){

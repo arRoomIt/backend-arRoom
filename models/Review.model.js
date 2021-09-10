@@ -6,8 +6,7 @@ const reviewSchema = new Schema (
     {
         rating: { type: Number , required: true},
         comment: { type: String , required: true},
-        
-
+        author: { type: mongoose.Types.ObjectId , ref:"User",required: true},
     },
     {timestamps:true}
 );

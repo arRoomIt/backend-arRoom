@@ -211,6 +211,22 @@ const workspaceAddReservation = async(workspaceId, reservationId)=> {
 
 }
 
+const workspaceAddReview = async(reviewId,workspaceId)=> {
+
+    try {
+        const workspaceUpdate = await Workspace.findByIdAndUpdate(
+            workspaceId,
+            {$addToSet:{reviews: reviewId}},
+            {new: true}
+        );
+        return workspaceUpdate;
+
+    } catch (error) {
+        console.log(error);
+    }    
+
+}
+
 
 export {
     workspaceGet,
@@ -219,5 +235,6 @@ export {
     workspaceDelete,
     workspaceGetById,
     workspaceFilter,
-    workspaceAddReservation
+    workspaceAddReservation,
+    workspaceAddReview
 }

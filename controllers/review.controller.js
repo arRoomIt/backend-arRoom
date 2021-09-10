@@ -1,5 +1,7 @@
 import Review from '../models/Review.model';
 
+import { workspaceAddReview } from './Workspace.controller';
+
  const reviewGet = async(req, res, next)=>{
     try {
         const reviews = await Review.find();
@@ -16,6 +18,37 @@ import Review from '../models/Review.model';
         return next(myError);
     }
     
+ }
+
+ const reviewWorkspace = async (req, res, next)=>{
+
+    try {
+        
+        const {rating, comment, author, workspaceId} = req.body;
+
+        const newComment = new Review(
+            { 
+                rating, 
+                comment, 
+                author 
+            }
+        );
+
+        //agregar el review en el workspace-->
+        const addReview = await workspaceAddReview(newComment.id,workspaceId);
+
+        if(addReview !== null && addReview !== undefined){
+            const createdReview = await newComment.save();
+
+            return res.status(200).json(createdReview);
+        }
+        return res.status(500).json("Error al crear le review");
+
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+
  }
 
  const reviewCreate = async(req, res, next)=>{
@@ -87,5 +120,6 @@ export{
     reviewCreate,
     reviewPut,
     reviewDelete,
-    reviewGetById
+    reviewGetById,
+    reviewWorkspace
 }

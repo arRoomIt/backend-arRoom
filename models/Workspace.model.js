@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const {Schema} = mongoose;
-
+//TODO: añadir direccion para el workspace
 const workspaceSchema = new Schema(
     {
         title:{type: String, required: true},

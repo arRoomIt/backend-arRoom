@@ -39,7 +39,7 @@ const getReservationId = async (req, res, next) => {
 
 
 const createReservation = async (req, res, next) => {
-    console.log("he entrado en la ruta",req.user.id);
+    
     try {
         const { start, end, price, total, workspaceId } = req.body;
        

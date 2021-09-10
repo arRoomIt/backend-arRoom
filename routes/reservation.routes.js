@@ -6,7 +6,7 @@ const routerReservation = express.Router();
 
 routerReservation.get('/', getReservation);
 //TODO: añadir direccion al modelo de Workspace
-routerReservation.post('/create',[isUser], createReservation);
+routerReservation.post('/create',[isUser, isAdmin], createReservation);
 
 routerReservation.put('/edit',[isUser],[isAdmin], editReservation);
 

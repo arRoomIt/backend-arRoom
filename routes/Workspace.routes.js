@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/',workspaceGet);
 
-router.post('/create',[isHost],[isAdmin], [upload.single('images'), uptoCloudinary], workspacePost);
+router.post('/create',[isHost , isAdmin], [upload.single('images'), uptoCloudinary], workspacePost);
 
 router.put('/edit',[isHost],[isAdmin],workspacePut);
 

@@ -66,7 +66,6 @@ const deleteUser = async (req, res, next) => {
 const userAddReservation = async (userId, reservationId) => {
 
     try {
-      console.log("userAddReservation-->",userId);
 
       const userUpdate = await User.findByIdAndUpdate(
           userId,

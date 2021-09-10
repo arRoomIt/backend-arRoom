@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/register', registerPost);
 
-router.post('/login',[isUser], loginPost);
+router.post('/login', loginPost);
 
 router.post('/logout',[isUser], logoutPost);
 

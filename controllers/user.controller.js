@@ -63,7 +63,31 @@ const deleteUser = async (req, res, next) => {
 
 
 
+const userAddReservation = async (userId, reservationId) => {
 
-export { getUser,
-         deleteUser,
-         editUser } 
+    try {
+      console.log("userAddReservation-->",userId);
+
+      const userUpdate = await User.findByIdAndUpdate(
+          userId,
+          {$addToSet: {reservations: reservationId}},
+          {new: true}
+      )
+
+      
+
+      return userUpdate;    
+    
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+export { 
+    getUser,
+    deleteUser,
+    editUser,
+    userAddReservation
+} 

@@ -27,14 +27,14 @@ const workspacePost = async(req, res, next) =>{
             roomType,
             totalOccupancy,
             summary,
+            latitude,
+            longitude,
             hasAirCon,
             hasAirHeating,
             hasInternet,
             price,
             publishedAt,
             isBooked,
-            reviews,
-            reservations
         } = req.body;
 
 
@@ -44,15 +44,15 @@ const workspacePost = async(req, res, next) =>{
                 roomType,
                 totalOccupancy,
                 summary,
+                latitude,
+                longitude,
                 hasAirCon: hasAirCon === "true"? true: false,
                 hasAirHeating:hasAirHeating === "true"? true: false,
                 hasInternet:hasInternet === "true"? true: false,
                 price,
-                publishedAt,
+                publishedAt: new Date(publishedAt),
                 isBooked: isBooked === "true"? true: false,
-                reviews,
                 images: req.file_url ? req.file_url: '',
-                reservations
             }
         );
 
@@ -75,6 +75,8 @@ const workspacePut = async (req, res) => {
             roomType,
             totalOccupancy,
             summary,
+            latitude,
+            longitude,
             hasAirCon,
             hasAirHeating,
             hasInternet,
@@ -92,6 +94,8 @@ const workspacePut = async (req, res) => {
         if(roomType) update.roomType = roomType;
         if(totalOccupancy) update.totalOccupancy = totalOccupancy;
         if(summary) update.summary = summary;
+        if(latitude) update.latitude = latitude;
+        if(longitude) update.longitude = longitude;
         if(hasAirCon) update.hasAirCon = hasAirCon;
         if(hasAirHeating) update.hasAirHeating = hasAirHeating;
         if(hasInternet) update.hasInternet = hasInternet;
@@ -153,7 +157,6 @@ const workspaceGetById = async (req, res, next) => {
 }
 
 const workspaceFilter = async (req, res, next) => {
-
     try {
         const isBooked = false;
         const {
@@ -168,6 +171,7 @@ const workspaceFilter = async (req, res, next) => {
         //comprobamos los campos y en caso de tenerlos se filtra workspace con dichos filtros
         const query = {
          ...(roomType && {roomType: {$regex : roomType}}),
+         ...(direccion && {direccion: {$regex : direccion}}),
          ...(totalOccupancy && {totalOccupancy: {$gte: totalOccupancy}}),
          ...(hasAirCon && {hasAirCon: hasAirCon}),
          ...(hasAirHeating && {hasAirHeating: hasAirHeating }),
@@ -227,6 +231,24 @@ const workspaceAddReview = async(reviewId,workspaceId)=> {
 
 }
 
+const workspaceDeleteReview = async(reviewId,workspaceId)=> {
+
+    try {
+
+        const deleteReview = await Workspace.findByIdAndUpdate(
+            workspaceId,
+            {$pull:{reviews: reviewId}},
+            {new: true}
+        );
+        return deleteReview;
+        
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+
+}
+
 
 export {
     workspaceGet,
@@ -236,5 +258,6 @@ export {
     workspaceGetById,
     workspaceFilter,
     workspaceAddReservation,
-    workspaceAddReview
+    workspaceAddReview,
+    workspaceDeleteReview
 }

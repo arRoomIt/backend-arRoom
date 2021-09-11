@@ -83,10 +83,29 @@ const userAddReservation = async (userId, reservationId) => {
 
 }
 
+const userAddReview = async(reviewId,reciverUserId) => {
+
+    try {
+        
+        const userUpdate = await User.findByIdAndUpdate(
+            reciverUserId,
+            {$addToSet:{hostsReview: reviewId}},
+            {new: true}
+        );
+        return userUpdate; 
+
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+
+}
+
 
 export { 
     getUser,
     deleteUser,
     editUser,
-    userAddReservation
+    userAddReservation,
+    userAddReview
 } 

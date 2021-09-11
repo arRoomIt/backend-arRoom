@@ -1,8 +1,8 @@
 import Review from '../models/Review.model';
 
-import { workspaceAddReview } from './Workspace.controller';
+import { workspaceAddReview,workspaceDeleteReview } from './Workspace.controller';
 
-import { userAddReview } from './user.controller';
+import { userAddReview,userDeleteReview } from './user.controller';
 
  const reviewGet = async(req, res, next) => {
     try {
@@ -125,13 +125,34 @@ const reviewPut = async(req, res, next)=>{
  }
 
  const reviewDelete = async(req, res, next)=>{
-
+    console.log("reviewDelete-->")
     const {id} = req.body;
-    try {
-        const reviewDelete = await Review.findByIdAndDelete(id);
-        console.log(reviewDelete);
+    try {        
+        const review = await Review.findById(id);
+        console.log("review-->",review)
+        if(review.workspace){
+            const deletedFromWorkspace = await workspaceDeleteReview(review.id,review.workspace);
+            console.log("review workspace--->",deletedFromWorkspace);
+            if(deletedFromWorkspace !== null && deletedFromWorkspace!==undefined){
+                const reviewDelete = await Review.findByIdAndDelete(id);
+                console.log(reviewDelete);
+                return res.status(200).json("Se elimino correctamente");
+            }
+        }
 
-        return res.status(200).json("Se elimino correctamente");
+        if(review.reciverUserId){
+            const deletedFromUser = await userDeleteReview(review.id,review.reciverUserId);
+
+            console.log("review user-->",deletedFromUser);
+
+            if(deletedFromUser!== null && deletedFromUser!==undefined){
+                const reviewDelete = await Review.findByIdAndDelete(id);
+                console.log(reviewDelete);
+                return res.status(200).json("Se elimino correctamente");
+            }
+        }
+        return res.status(500).json("No se ha eliminado");
+
     } catch (error) {
         const myError = new Error("No se ha podido eliminar el comentario");
         return next(myError);

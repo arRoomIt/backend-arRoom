@@ -8,6 +8,8 @@ const workspaceSchema = new Schema(
         roomType: {type: String, required: true},
         totalOccupancy: {type: Number, required: true}, 
         summary: {type: String, required: true},
+        latitude: {type: Number, required: true},
+        longitude: {type: Number, required: true},
         hasAirCon: {type: Boolean, required: true},
         hasAirHeating: {type: Boolean, required: true},
         hasInternet: {type: Boolean, required: true},

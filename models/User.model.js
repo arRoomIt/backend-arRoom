@@ -13,7 +13,7 @@ const userSchema = new Schema (
         role:{type: String , required: true, default: "user", enum: ['user','host','admin'] },
         isHost:{type: Boolean , required:true},
         profileImage:{type: String },
-        reviews:[{type: mongoose.Types.ObjectId, ref:"Review"}],
+        hostsReview:[{type: mongoose.Types.ObjectId, ref:"Review"}], //aqui se guardan los review de host hacia este user
         reservations:[{type: mongoose.Types.ObjectId, ref:"Reservation"}]
     },
         {timestamps:true}

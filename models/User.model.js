@@ -9,11 +9,11 @@ const userSchema = new Schema (
         email:{type: String , required: true},
         password:{type: String , required: true},
         name:{type: String , required: true},
-        phoneNumber:{type: String , required: true},
+        phoneNumber:{type: String},
         role:{type: String , required: true, default: "user", enum: ['user','host','admin'] },
-        isHost:{type: Boolean , required:true},
+        isHost:{type: Boolean , required:true, default: false},
         profileImage:{type: String },
-        hostsReview:[{type: mongoose.Types.ObjectId, ref:"Review"}], //aqui se guardan los review de host hacia este user
+        hostsReview:[{type: mongoose.Types.ObjectId, ref:"Review",default: []}], //aqui se guardan los review de host hacia este user
         reservations:[{type: mongoose.Types.ObjectId, ref:"Reservation"}]
     },
         {timestamps:true}

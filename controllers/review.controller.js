@@ -2,7 +2,9 @@ import Review from '../models/Review.model';
 
 import { workspaceAddReview } from './Workspace.controller';
 
- const reviewGet = async(req, res, next)=>{
+import { userAddReview } from './user.controller';
+
+ const reviewGet = async(req, res, next) => {
     try {
         const reviews = await Review.find();
         if(reviews.length===0){
@@ -17,7 +19,7 @@ import { workspaceAddReview } from './Workspace.controller';
         const myError = new Error("No se han encontrado los comentarios");
         return next(myError);
     }
-    
+
  }
 
  const reviewWorkspace = async (req, res, next)=>{
@@ -29,17 +31,19 @@ import { workspaceAddReview } from './Workspace.controller';
         const newComment = new Review(
             { 
                 rating, 
-                comment, 
+                comment,
+                date: new Date(), 
                 author 
             }
         );
 
         //agregar el review en el workspace-->
-        const addReview = await workspaceAddReview(newComment.id,workspaceId);
+        const addReviewWorkspace = await workspaceAddReview(newComment.id,workspaceId);
 
-        if(addReview !== null && addReview !== undefined){
+        if(addReviewWorkspace !== null && addReviewWorkspace !== undefined){
+
+            newComment.workspace = addReviewWorkspace.id;
             const createdReview = await newComment.save();
-
             return res.status(200).json(createdReview);
         }
         return res.status(500).json("Error al crear le review");
@@ -51,12 +55,48 @@ import { workspaceAddReview } from './Workspace.controller';
 
  }
 
+
+ const reviewUser = async(req, res, next)=>{
+
+    console.log("reviewUser-->")
+
+    try {
+        const {rating, comment, author, reciverUserId} = req.body;
+        
+        const newComment = await Review (
+            { 
+                rating, 
+                comment,
+                date: new Date(), 
+                author
+            }
+        );
+
+        console.log(newComment);
+        //agregar el review al user
+        const addReviewUser = await userAddReview(newComment.id,reciverUserId);
+        console.log(addReviewUser);
+        
+        if(addReviewUser !== null && addReviewUser !== undefined) {
+            newComment.reciverUserId = reciverUserId;
+            const createdReview = await newComment.save();
+            console.log(createdReview);
+            return res.status(200).json(createdReview);
+        }
+        return res.status(500).json("Error al crear review");
+
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+ }
+
  const reviewCreate = async(req, res, next)=>{
 
     try {
 
-        const {rating, comment }= req.body;
-        const newComment = new Review({rating, comment});
+        const {rating, comment, author }= req.body;
+        const newComment = new Review({rating, comment,date: new Date(), author});
         const createComment = await newComment.save();
         return res.status(200).json(createComment);
         
@@ -121,5 +161,6 @@ export{
     reviewPut,
     reviewDelete,
     reviewGetById,
-    reviewWorkspace
+    reviewWorkspace,
+    reviewUser
 }

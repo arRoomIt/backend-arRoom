@@ -1,4 +1,5 @@
 import passport from 'passport';
+require("../auth/google.strategy")
 
 const registerPost = (req, res, next) => {
 
@@ -48,10 +49,24 @@ const loginPost = (req, res, next) => {
     }
   
   }
+
+  // const facebookLogin = () =>{passport.authenticate("facebook");
+  // }
+  // const facebookCallback = () =>{passport.authenticate('facebook', { succesRedirect: '/reservation',failureRedirect: '/login' })
+  // }
+
+  //const googleLogin = () =>{passport.authenticate('google', { scope: ['profile'] })};
+
+//   const googleCallback = () =>{
+//     passport.authenticate('google', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     res.redirect('/');
+//   };
+// }
   
 export {
     registerPost,
     loginPost,
     logoutPost,
-    checkSession
-  };
+    checkSession,
+  }

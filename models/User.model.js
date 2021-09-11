@@ -7,11 +7,13 @@ const { Schema } = mongoose;
 const userSchema = new Schema ( 
     { 
         email:{type: String , required: true},
-        password:{type: String , required: true},
+        password:{type: String},
         name:{type: String , required: true},
-        phoneNumber:{type: String , required: true},
+        phoneNumber:{type: String },
         role:{type: String , required: true, default: "user", enum: ['user','host','admin'] },
-        isHost:{type: Boolean , required:true},
+        isHost:{type: Boolean },
+        googleId:{type: String},
+        facebookId:{type: String},
         profileImage:{type: String },
         reviews:[{type: mongoose.Types.ObjectId, ref:"Review"}],
         reservations:[{type: mongoose.Types.ObjectId, ref:"Reservation"}]

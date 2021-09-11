@@ -44,16 +44,17 @@ passport.use(new GoogleStrategy(
 }
 ))
 
-passport.use("sign-up-google",new GoogleStrategy(
+passport.use("googleLogin",new GoogleStrategy(
     {
         clientID:process.env.GOOGLE_APP_ID ,
         clientSecret: process.env.GOOGLE_APP_SECRET,
         callbackURL: process.env.CALLBACK_GOOGLE_LOGIN,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const user = await User.findById({email});
-                                                
+      console.log(profile);
+      const user = await User.find({googleId:profile.id})                         
       if (user) {
+
         done(null, user)
       } else {
         done(null, false)

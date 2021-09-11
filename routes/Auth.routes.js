@@ -1,8 +1,13 @@
 import express from 'express';
+import passport from 'passport';
 import {registerPost,
     loginPost,
     logoutPost,
-    checkSession} from '../controllers/auth.controller';
+    checkSession,
+    facebookLogin,
+    facebookCallback,
+    googleLogin,
+    googleCallback} from '../controllers/auth.controller';
 
     import{isUser}from '../middlewares/auth.middleware';
 
@@ -16,5 +21,18 @@ router.post('/login',[isUser], loginPost);
 router.post('/logout',[isUser], logoutPost);
 
 router.get('/checkSession',checkSession);
+
+router.get('/facebook', passport.authenticate("facebook", { scope: ['profile','email'] }))
+
+router.get('/facebook/callback', passport.authenticate('facebook', { succesRedirect: '/reservation',failureRedirect: '/login' } ))
+
+router.get('/google', passport.authenticate('google', { scope: ['profile','email'] }) );
+
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),
+function(req, res) {
+  res.redirect('/');
+});
+
+
 
 export {router};

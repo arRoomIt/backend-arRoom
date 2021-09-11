@@ -17,8 +17,6 @@ const getUser = async (req, res, next) => {
 };
 
 
-
-
 const editUser = async (req, res, next) =>{
     try {
         const { id, email, password, name, phoneNumber, profileImage, isHost } = req.body;
@@ -42,9 +40,6 @@ const editUser = async (req, res, next) =>{
     }
 };
 
-        
-
-
 
 const deleteUser = async (req, res, next) => {
     const { id } = req.body;
@@ -63,7 +58,65 @@ const deleteUser = async (req, res, next) => {
 
 
 
+const userAddReservation = async (userId, reservationId) => {
 
-export { getUser,
-         deleteUser,
-         editUser } 
+    try {
+
+      const userUpdate = await User.findByIdAndUpdate(
+          userId,
+          {$addToSet: {reservations: reservationId}},
+          {new: true}
+      )
+
+      return userUpdate;    
+    
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+const userAddReview = async(reviewId,reciverUserId) => {
+
+    try {
+        
+        const userUpdate = await User.findByIdAndUpdate(
+            reciverUserId,
+            {$addToSet:{hostsReview: reviewId}},
+            {new: true}
+        );
+        return userUpdate; 
+
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+}
+
+const userDeleteReview = async(reviewId,reciverUserId) => {
+
+    try {
+        
+       const deleteReview = await User.findByIdAndUpdate(
+            reciverUserId,
+           {$pull: {hostsReview: reviewId }},
+           {new: true}
+       );
+       return deleteReview; 
+
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+
+}
+
+
+export { 
+    getUser,
+    deleteUser,
+    editUser,
+    userAddReservation,
+    userAddReview,
+    userDeleteReview
+} 

@@ -9,13 +9,13 @@ const userSchema = new Schema (
         email:{type: String , required: true},
         password:{type: String},
         name:{type: String , required: true},
-        phoneNumber:{type: String },
-        role:{type: String , required: true, default: "user", enum: ['user','host','admin'] },
-        isHost:{type: Boolean },
         googleId:{type: String},
         facebookId:{type: String},
+        phoneNumber:{type: String},
+        role:{type: String , required: true, default: "user", enum: ['user','host','admin'] },
+        isHost:{type: Boolean , required:true, default: false},
         profileImage:{type: String },
-        reviews:[{type: mongoose.Types.ObjectId, ref:"Review"}],
+        hostsReview:[{type: mongoose.Types.ObjectId, ref:"Review",default: []}], //aqui se guardan los review de host hacia este user
         reservations:[{type: mongoose.Types.ObjectId, ref:"Reservation"}]
     },
         {timestamps:true}

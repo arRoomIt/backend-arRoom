@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import morgan from 'morgan';
 // import express-session as session from 'express-session';
 // import connect-mongo as MongoStore from 'connect-mongo';
 const session = require('express-session');
@@ -45,6 +46,9 @@ app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+//se usa morgan para saber las rutas
+app.use(morgan('tiny'));
+
 app.use('/workspace',routerWorkspace);
 app.use('/reservation', routerReservation);
 app.use("/review", routerReview);
@@ -58,6 +62,7 @@ app.use('*',(req,res,next) => {
 })
 
 app.use((error,req,res,next) => {
+    console.log("tratamiento de error global-->",error.message);
     return res.status(error.status || 500).json(error.message || 'Unexpected error');
 })
 

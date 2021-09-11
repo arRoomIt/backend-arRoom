@@ -1,5 +1,6 @@
 import Reservation from '../models/Reservation.model';
-
+import {userAddReservation} from '../controllers/user.controller';
+import {workspaceAddReservation} from '../controllers/Workspace.controller';
 
 
 const getReservation = async (req, res, next) => {
@@ -38,8 +39,10 @@ const getReservationId = async (req, res, next) => {
 
 
 const createReservation = async (req, res, next) => {
+    
     try {
-        const { start, end, price, total } = req.body;
+        const { start, end, price, total, workspaceId } = req.body;
+       
         const newReservation = new Reservation({ 
             start, 
             end, 
@@ -47,10 +50,21 @@ const createReservation = async (req, res, next) => {
             total 
         });
 
-        const createReservation = await newReservation.save();
-        return res.status(200).json(createReservation);
+        const updateWorkspace = await workspaceAddReservation(workspaceId,newReservation.id);
+
+        if(updateWorkspace !== null && updateWorkspace !== undefined){
+            const updateUser = await userAddReservation(req.user.id ,workspaceId);
+
+            if(updateUser !== null && updateUser !== undefined){
+                const createReservation = await newReservation.save();
+                return res.status(200).json(createReservation);
+            }
+        }
+
+        return res.status(400).json("Error al crear la reserva");
         
     } catch (error) {
+        console.log(error);
         return next(error);
     }
 };

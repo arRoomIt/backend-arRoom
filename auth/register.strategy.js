@@ -49,6 +49,14 @@ const registerStrategy = new LocalStrategy(
                 isHost:req.body.isHost,
                 profileImage:req.body.profileImage,
             });
+
+            if(!newUser.googleId || !newUser.facebookId){
+                if(!newUser.password){
+                    const error = new Error("Necesitas poner una contraseña");
+                    error.status = 404;
+                    throw error;
+                }
+            }
             if(newUser.isHost === true){
                 newUser.role = 'host';
             }

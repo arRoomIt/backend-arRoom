@@ -10,6 +10,7 @@ const workspaceSchema = new Schema(
         summary: {type: String, required: true},
         latitude: {type: Number, required: true},
         longitude: {type: Number, required: true},
+        direccion: {type: String, required: true},
         hasAirCon: {type: Boolean, required: true},
         hasAirHeating: {type: Boolean, required: true},
         hasInternet: {type: Boolean, required: true},

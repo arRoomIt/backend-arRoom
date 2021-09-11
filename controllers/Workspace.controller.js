@@ -27,6 +27,7 @@ const workspacePost = async(req, res, next) =>{
             roomType,
             totalOccupancy,
             summary,
+            direction,
             latitude,
             longitude,
             hasAirCon,
@@ -46,6 +47,7 @@ const workspacePost = async(req, res, next) =>{
                 summary,
                 latitude,
                 longitude,
+                direction,
                 hasAirCon: hasAirCon === "true"? true: false,
                 hasAirHeating:hasAirHeating === "true"? true: false,
                 hasInternet:hasInternet === "true"? true: false,
@@ -77,6 +79,7 @@ const workspacePut = async (req, res) => {
             summary,
             latitude,
             longitude,
+            direction,
             hasAirCon,
             hasAirHeating,
             hasInternet,
@@ -96,6 +99,7 @@ const workspacePut = async (req, res) => {
         if(summary) update.summary = summary;
         if(latitude) update.latitude = latitude;
         if(longitude) update.longitude = longitude;
+        if(direction) update.direction = direction;
         if(hasAirCon) update.hasAirCon = hasAirCon;
         if(hasAirHeating) update.hasAirHeating = hasAirHeating;
         if(hasInternet) update.hasInternet = hasInternet;
@@ -163,6 +167,7 @@ const workspaceFilter = async (req, res, next) => {
             roomType,
             totalOccupancy,
             hasAirCon,
+            direction,
             hasAirHeating,
             hasInternet,
             price,
@@ -171,7 +176,7 @@ const workspaceFilter = async (req, res, next) => {
         //comprobamos los campos y en caso de tenerlos se filtra workspace con dichos filtros
         const query = {
          ...(roomType && {roomType: {$regex : roomType}}),
-         ...(direccion && {direccion: {$regex : direccion}}),
+         ...(direction && {direction: {$regex : direction}}),
          ...(totalOccupancy && {totalOccupancy: {$gte: totalOccupancy}}),
          ...(hasAirCon && {hasAirCon: hasAirCon}),
          ...(hasAirHeating && {hasAirHeating: hasAirHeating }),

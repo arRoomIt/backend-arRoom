@@ -5,11 +5,7 @@ import jwt from 'jsonwebtoken';
 import {registerPost,
     loginPost,
     logoutPost,
-    checkSession,
-    facebookLogin,
-    facebookCallback,
-    googleLogin,
-    googleCallback} from '../controllers/auth.controller';
+    checkSession} from '../controllers/auth.controller';
 
     import{isUser}from '../middlewares/auth.middleware';
 
@@ -23,10 +19,6 @@ router.post('/login', loginPost);
 router.post('/logout',[isUser], logoutPost);
 
 router.get('/checkSession',checkSession);
-
-router.get('/facebook', passport.authenticate("facebook", { scope: ['profile','email'] }))
-
-router.get('/facebook/callback', passport.authenticate('facebook', { succesRedirect: '/reservation',failureRedirect: '/login' } ))
 
 router.get('/google', passport.authenticate('google', { scope: ['profile','email'] }) );
 
@@ -45,7 +37,7 @@ function(req, res, next) {
 });
 router.get(
   "/google/signup",
-  passport.authenticate("googleLogin", {scope: ['https://www.googleapis.com/auth/plus.login'], session: false }),
+  passport.authenticate("googleLogin", {scope: ['https://www.googleapis.com/auth/plus.login'], session: true }),
   function (req, res, next) {
     if (req.user) { 
       const token = jwt.sign({id: req.user._id}, 'top_secret', {

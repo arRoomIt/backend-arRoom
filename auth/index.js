@@ -1,7 +1,6 @@
 import passport from "passport";
 import registerStrategy from "./register.strategy";
 import loginStrategy from "./login.strategy";
-import facebookStrategy from "./facebook.strategy";
 import User from "../models/User.model";
 
 passport.serializeUser((user,done)=>{
@@ -21,7 +20,6 @@ passport.deserializeUser(async(userId,done)=>{
 const setStrategies = () => {
     passport.use("register", registerStrategy);
     passport.use("login", loginStrategy);
-    passport.use("facebook", facebookStrategy);
 }
 
 export default setStrategies;

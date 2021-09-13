@@ -50,11 +50,6 @@ const loginPost = (req, res, next) => {
   
   }
 
-  // const facebookLogin = () =>{passport.authenticate("facebook");
-  // }
-  // const facebookCallback = () =>{passport.authenticate('facebook', { succesRedirect: '/reservation',failureRedirect: '/login' })
-  // }
-
   //const googleLogin = () =>{passport.authenticate('google', { scope: ['profile'] })};
 
 //   const googleCallback = () =>{

@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import morgan from 'morgan';
+import cors from 'cors';
 // import express-session as session from 'express-session';
 // import connect-mongo as MongoStore from 'connect-mongo';
 const session = require('express-session');
@@ -25,9 +26,14 @@ import connect,{DB_URL} from './config/db';
 connect();
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200,
+}));
 
 app.use(session({
     secret:process.env.SESSION_SECRET || "!@#$%^GVHCJGhbhdc23456",

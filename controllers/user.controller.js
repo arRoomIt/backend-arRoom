@@ -1,4 +1,8 @@
 import User from '../models/User.model';
+import nodemailer from 'nodemailer';
+import mail_options from '../utils/utils.User';
+
+
 
 
 const getUser = async (req, res, next) => {
@@ -15,6 +19,35 @@ const getUser = async (req, res, next) => {
         return next(error);
     }
 };
+
+
+
+const sendEmail = async (req, res, next) => {
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.MAILUSER,
+            pass: process.env.MAILPSSWD
+        }
+    });
+
+    try {
+        transporter.sendMail(mail_options, (error, info) => {
+            if(error) {
+                return res.status(500).json(error.message);
+            }else{
+                return res.status(200).json('El correo se envió correctamente');
+            }
+        });
+        
+    } catch (error) {
+        return next(error);
+    }
+   
+};
+
+
 
 
 const editUser = async (req, res, next) =>{
@@ -112,11 +145,10 @@ const userDeleteReview = async(reviewId,reciverUserId) => {
 }
 
 
-export { 
-    getUser,
-    deleteUser,
-    editUser,
-    userAddReservation,
-    userAddReview,
-    userDeleteReview
-} 
+export { getUser,
+         deleteUser,
+         editUser,
+         sendEmail,
+         userAddReservation,
+         userAddReview,
+         userDeleteReview} 

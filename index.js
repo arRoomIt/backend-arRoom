@@ -30,16 +30,7 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 const router = express.Router();
- router.get('/',(req,res)=>{ 
-   
-     res.send('<a href="/auth/facebook">Authenticate whit facebook</a>')
- } )
- router.get('/google',(req,res)=>{ 
-   
-     res.send('<a href="/auth/google">Authenticate whit google</a>')
- } )
 
- app.use('/', router);
 app.use(cors({
     origin: 'http://localhost:5000',
     credentials: true,

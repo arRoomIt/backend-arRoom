@@ -2,8 +2,7 @@ import User from '../models/User.model';
 import nodemailer from 'nodemailer';
 import mail_options from '../utils/utils.User';
 
-
-
+const {cloudinary} = require('../config/cloudinary');
 
 const getUser = async (req, res, next) => {
     try {
@@ -72,6 +71,33 @@ const editUser = async (req, res, next) =>{
         return next(error);
     }
 };
+
+
+const postUpload = async (req, res, next) =>{
+
+    try {
+        const {image,userId} = req.body;
+
+        const upload = await cloudinary.uploader.upload(image);
+        const secureRute = upload.secure_url;
+
+        const update = {
+            profileImage: secureRute,
+        }
+
+        const updateUser = await User.findByIdAndUpdate(
+            userId,
+            update,
+            {new: true},
+        );
+        
+        res.status(200).json(updateUser);
+        
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+}
 
 
 const deleteUser = async (req, res, next) => {
@@ -151,4 +177,5 @@ export { getUser,
          sendEmail,
          userAddReservation,
          userAddReview,
+         postUpload,
          userDeleteReview} 

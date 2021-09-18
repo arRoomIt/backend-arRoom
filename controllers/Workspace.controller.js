@@ -1,4 +1,5 @@
 import Workspace from '../models/Workspace.model';
+const {cloudinary} = require('../config/cloudinary');
 
 const workspaceGet = async(req, res, next) =>{
 
@@ -33,12 +34,11 @@ const workspacePost = async(req, res, next) =>{
             hasAirCon,
             hasAirHeating,
             hasInternet,
+            images,
             price,
             publishedAt,
             isBooked,
         } = req.body;
-
-
         const newWorkspace = new Workspace(
             {
                 title,
@@ -54,11 +54,30 @@ const workspacePost = async(req, res, next) =>{
                 price,
                 publishedAt: new Date(publishedAt),
                 isBooked: isBooked === "true"? true: false,
-                images: req.file_url ? req.file_url: '',
             }
         );
 
         const createdWorkspace = await newWorkspace.save();
+
+        if(createdWorkspace !== undefined || createdWorkspace !== null) {
+            if(images !==""){
+                const upload = await cloudinary.uploader.upload(images);
+                const secureRute = upload.secure_url;
+
+                const update = {
+                    images:secureRute,
+                }
+                
+                const updateWorkspace = await Workspace.findByIdAndUpdate(
+                    createdWorkspace._id,
+                    update,
+                    {new: true},
+                )
+                console.log(updateWorkspace);
+                return res.status(200).json(updateWorkspace);
+            }
+        }
+
         return res.status(200).json(createdWorkspace);
 
     } catch (error) {

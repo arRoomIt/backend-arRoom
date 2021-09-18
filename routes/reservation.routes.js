@@ -8,9 +8,9 @@ routerReservation.get('/', getReservation);
 //TODO: añadir direccion al modelo de Workspace
 routerReservation.post('/create',[isUser, isAdmin], createReservation);
 
-routerReservation.put('/edit',[isUser],[isAdmin], editReservation);
+routerReservation.put('/edit',[isUser, isAdmin], editReservation);
 
-routerReservation.delete('/delete',[isUser],[isAdmin], deleteReservation);
+routerReservation.delete('/delete',[isUser, isAdmin], deleteReservation);
 
 routerReservation.get('/:id', getReservationId);
 

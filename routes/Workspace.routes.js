@@ -10,11 +10,11 @@ const router = express.Router();
 
 router.get('/',workspaceGet);
 
-router.post('/create',[isHost , isAdmin], [upload.single('images'), uptoCloudinary], workspacePost);
+router.post('/create',[isHost , isAdmin], workspacePost);
 
-router.put('/edit',[isHost],[isAdmin],workspacePut);
+router.put('/edit',[isHost, isAdmin],workspacePut);
 
-router.delete('/delete/:id',[isHost],[isAdmin],workspaceDelete);
+router.delete('/delete/:id',[isHost, isAdmin],workspaceDelete);
 
 router.get('/filter',workspaceFilter);
 
